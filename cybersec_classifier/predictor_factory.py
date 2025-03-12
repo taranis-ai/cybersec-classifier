@@ -10,9 +10,9 @@ class PredictorFactory:
     """
 
     def __new__(cls, *args, **kwargs) -> Predictor:
-        if Config.MODEL == 'bart_mnli':
-            from cybersec_classifier.bart_mnli import BartMnli
-            return BartMnli(*args, **kwargs)
+        if Config.MODEL == "bart_mnli":
+            from cybersec_classifier.bart_mnli import BartMNLIClassifier
+
+            return BartMNLIClassifier(*args, **kwargs)
 
         raise ValueError(f"Unsupported model: {Config.MODEL}")
-
