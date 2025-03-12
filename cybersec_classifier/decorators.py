@@ -2,7 +2,19 @@ from flask import request
 from functools import wraps
 
 from cybersec_classifier.config import Config
-from cybersec_classifier.log import Logger
+from cybersec_classifier.log import logger
+
+
+def debug_request(func):
+    def wrapper(*args, **kwargs):
+        log_str = f"Method: {request.method}, Endpoint: {request.path}, "
+        payload = request.get_json(silent=True)
+        if payload is not None:
+            log_str += f"Payload: {payload}"
+        logger.debug(log_str)
+        return func(*args, **kwargs)
+
+    return wrapper
 
 
 def api_key_required(fn):
