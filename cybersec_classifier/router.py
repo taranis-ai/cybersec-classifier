@@ -3,7 +3,7 @@ from flask.views import MethodView
 
 from cybersec_classifier.predictor import Predictor
 from cybersec_classifier.predictor_factory import PredictorFactory
-from cybersec_classifier.decorators import api_key_required
+from cybersec_classifier.decorators import api_key_required, debug_request
 
 
 class BotEndpoint(MethodView):
@@ -11,28 +11,28 @@ class BotEndpoint(MethodView):
         super().__init__()
         self.bot = bot
 
+    @debug_request
     @api_key_required
     def post(self):
         data = request.get_json()
+        text = data.get("text", "")
 
-        # pre-process data here and pass it to self.bot.predict method
-        # e.g. extracted_data = data.get("key", "")
-        #      bot_result = self.bot.predict(extracted_data)
-        bot_result = None
-
-        # return bot_result as JSON
-        return jsonify({"result": bot_result})
+        classification_result = self.bot.predict(text)
+        return jsonify(classification_result)
 
 
 class HealthCheck(MethodView):
+    @debug_request
     def get(self):
         return jsonify({"status": "ok"})
+
 
 class ModelInfo(MethodView):
     def __init__(self, bot: Predictor):
         super().__init__()
         self.bot = bot
 
+    @debug_request
     def get(self):
         return jsonify(self.bot.modelinfo)
 
