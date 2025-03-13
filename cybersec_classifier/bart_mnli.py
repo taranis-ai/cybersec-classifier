@@ -11,10 +11,6 @@ class BartMNLIClassifier(Predictor):
         self.model = pipeline("zero-shot-classification", model=self.model_name)
 
     def predict(self, text: str) -> dict:
-        if not text:
-            logger.error("No text input provided for classificaiton")
-            return dict(zip(self.candidate_labels, [0.0, 0.0]))
-
         classification_result = self.model(text, self.candidate_labels)
         scores = classification_result.get("scores", None)
         if not scores or not isinstance(scores, list):

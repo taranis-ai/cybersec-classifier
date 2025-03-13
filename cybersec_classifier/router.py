@@ -16,7 +16,8 @@ class BotEndpoint(MethodView):
     def post(self):
         data = request.get_json()
         text = data.get("text", "")
-
+        if not text:
+            return jsonify({"error": "No text provided for NER extraction"}), 400
         classification_result = self.bot.predict(text)
         return jsonify(classification_result)
 
