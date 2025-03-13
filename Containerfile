@@ -18,6 +18,8 @@ RUN uv venv && \
 
 FROM python:3.12-slim
 
+ARG MODEL="bart_mnli"
+
 WORKDIR /app/
 
 RUN groupadd user && useradd --home-dir /app -g user user && chown -R user:user /app
