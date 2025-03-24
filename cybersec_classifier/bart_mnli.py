@@ -12,9 +12,10 @@ class BartMNLIClassifier(Predictor):
 
     def predict(self, text: str) -> dict:
         classification_result = self.model(text, self.candidate_labels)
-        scores = classification_result.get("scores", None)
-        if not scores or not isinstance(scores, list):
-            logger.error("Classifier did not produce valid classification scores")
+        predicted_labels = classification_result.get("labels", [])
+        scores = classification_result.get("scores", [])
+        if not scores or not predicted_labels:
+            logger.error("Failed to classify text: {text}")
             scores = [0.0, 0.0]
 
         return dict(zip(self.candidate_labels, scores))
