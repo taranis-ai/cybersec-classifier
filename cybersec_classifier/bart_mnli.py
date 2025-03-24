@@ -18,4 +18,4 @@ class BartMNLIClassifier(Predictor):
             logger.error("Failed to classify text: {text}")
             scores = [0.0, 0.0]
 
-        return dict(zip(self.candidate_labels, scores))
+        return dict(zip(predicted_labels, scores))
