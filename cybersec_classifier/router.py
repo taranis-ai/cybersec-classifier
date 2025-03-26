@@ -16,6 +16,8 @@ class BotEndpoint(MethodView):
     def post(self):
         data = request.get_json()
         text = data.get("text", "")
+        if not isinstance(text, str):
+            return jsonify({"error": f"Wrong data format. Cannot classify type: {type(text)}"}), 400
         if not text:
             return jsonify({"error": "No text provided for cybersecurity classification"}), 400
         try:
