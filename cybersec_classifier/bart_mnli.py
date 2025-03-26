@@ -5,7 +5,7 @@ from cybersec_classifier.log import logger
 
 class BartMNLIClassifier(Predictor):
     model_name = "facebook/bart-large-mnli"
-    candidate_labels = ["security", "non-security"]
+    candidate_labels = ["cybersecurity", "non-cybersecurity"]
 
     def __init__(self):
         self.model = pipeline("zero-shot-classification", model=self.model_name)
