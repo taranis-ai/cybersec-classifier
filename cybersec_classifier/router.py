@@ -17,9 +17,11 @@ class BotEndpoint(MethodView):
         data = request.get_json()
         text = data.get("text", "")
         if not text:
-            return jsonify({"error": "No text provided for NER extraction"}), 400
-        classification_result = self.bot.predict(text)
-        return jsonify(classification_result)
+            return jsonify({"error": "No text provided for cybersecurity classification"}), 400
+        try:
+            return jsonify(self.bot.predict(text))
+        except ValueError as e:
+            return jsonify({"error": str(e)}), 400
 
 
 class HealthCheck(MethodView):
