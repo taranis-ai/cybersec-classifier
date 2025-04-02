@@ -10,7 +10,7 @@ class BartMNLIClassifier(Predictor):
         self.model = pipeline("zero-shot-classification", model=self.model_name)
 
     def predict(self, text: str) -> dict:
-        classification_result = self.model(text, self.candidate_labels)
+        classification_result = self.model(text, self.candidate_labels, multi_label=True)
         predicted_labels = classification_result.get("labels", [])
         scores = classification_result.get("scores", [])
         if not scores or not predicted_labels:
