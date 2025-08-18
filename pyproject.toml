@@ -19,7 +19,8 @@ dependencies = [
     "python-dotenv",
     "granian",
     "transformers",
-    "torch"
+    "torch",
+    "joblib>=1.5.1",
 ]
 dynamic = ["version"]
 
