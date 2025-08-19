@@ -15,7 +15,7 @@ class MLPClassifier(Predictor):
 
     def predict(self, text: str) -> dict:
         embedding = self.embedder.encode([text], convert_to_numpy=True, show_progress_bar=False)
-        if scores := self.model.predict_proba(embedding):
-            return dict(zip(self.candidate_labels, scores.tolist()[0]))
+        if scores := self.model.predict_proba(embedding).tolist()[0]:
+            return dict(zip(self.candidate_labels, scores))
         else:
             raise ValueError(f"Failed to classify text: {text}")
