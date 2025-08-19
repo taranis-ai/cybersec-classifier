@@ -21,6 +21,7 @@ dependencies = [
     "transformers",
     "torch",
     "joblib>=1.5.1",
+    "sentence-transformers>=5.1.0",
 ]
 dynamic = ["version"]
 
