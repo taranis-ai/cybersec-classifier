@@ -16,6 +16,9 @@ class BotEndpoint(MethodView):
     @api_key_required
     def post(self):
         data = request.get_json()
+        if not isinstance(data, dict):
+            return jsonify({"error": "Wrong data format. Send payload as '{'text': 'Text to classify'}'"}), 400
+
         text = data.get("text", "")
         if not isinstance(text, str):
             return jsonify({"error": f"Wrong data format. Cannot classify type: {type(text)}"}), 400
