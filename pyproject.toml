@@ -19,7 +19,9 @@ dependencies = [
     "python-dotenv",
     "granian",
     "transformers",
-    "torch"
+    "torch",
+    "joblib>=1.5.1",
+    "sentence-transformers>=5.1.0",
 ]
 dynamic = ["version"]
 
@@ -39,6 +41,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
 fallback_version = "0.0.0"
+tag_regex = "^refs/pull/(\\d+)/merge$"
 
 [tool.setuptools]
 packages = ["cybersec_classifier"]

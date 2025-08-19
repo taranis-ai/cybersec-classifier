@@ -14,5 +14,9 @@ class PredictorFactory:
             from cybersec_classifier.bart_mnli import BartMNLIClassifier
 
             return BartMNLIClassifier(*args, **kwargs)
+        if Config.MODEL == "mlp":
+            from cybersec_classifier.cybersec_mlp import MLPClassifier
+
+            return MLPClassifier(*args, **kwargs)
 
         raise ValueError(f"Unsupported model: {Config.MODEL}")
