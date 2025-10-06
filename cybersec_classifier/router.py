@@ -1,12 +1,12 @@
 from taranis_base_bot.blueprint import create_service_blueprint
 from taranis_base_bot.modelinfo import provider_for
-from cybersec_classifier.config import get_model_instance
+from cybersec_classifier.config import get_model
 from taranis_base_bot.decorators import api_key_required
 
 
 def init(app):
     app.url_map.strict_slashes = False
-    model = get_model_instance()
+    model = get_model()
 
     def request_parser(data: dict) -> dict:
         text = data.get("text", "")

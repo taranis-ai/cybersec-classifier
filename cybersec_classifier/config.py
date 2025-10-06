@@ -1,28 +1,18 @@
-from pydantic import field_validator, ValidationInfo
-from pydantic_settings import BaseSettings, SettingsConfigDict
-from datetime import datetime
+from functools import lru_cache
 from typing import Literal
+from taranis_base_bot.protocols import Predictor
+from taranis_base_bot.config import get_settings as get_common_settings
+from cybersec_classifier.cybersec_mlp import MLPClassifier
+from cybersec_classifier.bart_mnli import BartMNLIClassifier
+
+Config = get_common_settings()
+MODEL: Literal["mlp", "bart_mnli"] = "mlp"
 
 
-class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
-
-    MODULE_ID: str = "cybersec-classifier"
-    DEBUG: bool = False
-    API_KEY: str = ""
-
-    COLORED_LOGS: bool = True
-    BUILD_DATE: datetime = datetime.now()
-    GIT_INFO: dict[str, str] | None = None
-    CACHE_TYPE: str = "SimpleCache"
-    CACHE_DEFAULT_TIMEOUT: int = 300
-    MODEL: Literal["bart_mnli", "mlp"] = "mlp"
-
-    @field_validator("API_KEY", mode="before")
-    def check_non_empty_string(cls, v: str, info: ValidationInfo) -> str:
-        if not isinstance(v, str) or not v.strip():
-            print("API_KEY is not set or empty, disabling API key requirement")
-        return v
-
-
-Config = Settings()
+@lru_cache(maxsize=1)
+def get_model() -> Predictor:
+    if MODEL == "mlp":
+        return MLPClassifier()
+    if MODEL == "bart_mnli":
+        return BartMNLIClassifier()
+    raise ValueError(f"Unknown model {MODEL!r}")
