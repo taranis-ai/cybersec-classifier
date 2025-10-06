@@ -1,56 +1,25 @@
-from flask import Flask, Blueprint, jsonify, request
-from flask.views import MethodView
-
-from cybersec_classifier.predictor import Predictor
-from cybersec_classifier.predictor_factory import PredictorFactory
-from cybersec_classifier.decorators import api_key_required, debug_request
-from cybersec_classifier.config import Config
+from taranis_base_bot.blueprint import create_service_blueprint
+from taranis_base_bot.modelinfo import provider_for
+from cybersec_classifier.config import get_model_instance
+from taranis_base_bot.decorators import api_key_required
 
 
-class BotEndpoint(MethodView):
-    def __init__(self, bot: Predictor) -> None:
-        super().__init__()
-        self.bot = bot
-
-    @debug_request(Config.DEBUG)
-    @api_key_required
-    def post(self):
-        data = request.get_json()
-        if not isinstance(data, dict):
-            return jsonify({"error": "Wrong data format. Send payload as '{'text': 'Text to classify'}'"}), 400
-
-        text = data.get("text", "")
-        if not isinstance(text, str):
-            return jsonify({"error": f"Wrong data format. Cannot classify type: {type(text)}"}), 400
-        if not text:
-            return jsonify({"error": "No text provided for cybersecurity classification"}), 400
-        try:
-            return jsonify(self.bot.predict(text))
-        except ValueError as e:
-            return jsonify({"error": str(e)}), 400
-
-
-class HealthCheck(MethodView):
-    @debug_request(Config.DEBUG)
-    def get(self):
-        return jsonify({"status": "ok"})
-
-
-class ModelInfo(MethodView):
-    def __init__(self, bot: Predictor):
-        super().__init__()
-        self.bot = bot
-
-    @debug_request(Config.DEBUG)
-    def get(self):
-        return jsonify(self.bot.modelinfo)
-
-
-def init(app: Flask):
-    bot = PredictorFactory()
+def init(app):
     app.url_map.strict_slashes = False
-    bot_bp = Blueprint("bot", __name__)
-    bot_bp.add_url_rule("/", view_func=BotEndpoint.as_view("predict", bot=bot))
-    bot_bp.add_url_rule("/health", view_func=HealthCheck.as_view("health"))
-    bot_bp.add_url_rule("/modelinfo", view_func=ModelInfo.as_view("modelinfo", bot=bot))
-    app.register_blueprint(bot_bp)
+    model = get_model_instance()
+
+    def request_parser(data: dict) -> dict:
+        text = data.get("text", "")
+        if not isinstance(text, str) or not text.strip():
+            raise ValueError("No text provided for cybersecurity classification")
+        return {"text": text}
+
+    bp = create_service_blueprint(
+        name="bot",
+        url_prefix="/",
+        predict_fn=model.predict,
+        modelinfo_provider=provider_for(model),
+        request_parser=request_parser,
+        method_decorators=[api_key_required],
+    )
+    app.register_blueprint(bp)
