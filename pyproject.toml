@@ -13,15 +13,9 @@ classifiers = [
 ]
 requires-python = ">=3.10"
 dependencies = [
-    "requests",
-    "Flask",
-    "pydantic-settings",
-    "python-dotenv",
-    "granian",
-    "transformers",
-    "torch",
     "joblib>=1.5.1",
     "sentence-transformers>=5.1.0",
+    "taranis_base_bot"
 ]
 dynamic = ["version"]
 
@@ -56,3 +50,6 @@ filterwarnings = [
     "ignore::DeprecationWarning",
     "ignore::UserWarning"
 ]
+
+[tool.uv.sources]
+taranis_base_bot = { path = "../taranis_base_bot" }
