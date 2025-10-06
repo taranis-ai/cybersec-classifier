@@ -6,9 +6,7 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object("cybersec_classifier.config.Config")
 
-    with app.app_context():
-        init(app)
-
+    router.init(app)
     return app
 
 
