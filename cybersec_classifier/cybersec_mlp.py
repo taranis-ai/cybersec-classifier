@@ -7,7 +7,6 @@ class MLPClassifier:
     """
     Classifier based on embed + MLP
     URL: https://huggingface.co/selfconstruct3d/cybersec_classifier
-
     """
 
     model_name = "selfconstruct3d/cybersec_classifier"

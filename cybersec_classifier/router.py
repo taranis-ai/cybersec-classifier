@@ -16,13 +16,13 @@ def init(app):
     model = get_model()
 
     model_name = getattr(model, "model_name", None)
-    modelinfo_provider = (lambda: get_modelinfo(model_name)) if isinstance(model_name, str) else (lambda: {"model": "unknown"})
+    modelinfo_fn = (lambda: get_modelinfo(model_name)) if isinstance(model_name, str) else (lambda: {"model": "unknown"})
 
     bp = create_service_blueprint(
         name="bot",
         url_prefix="/",
         predict_fn=model.predict,
-        modelinfo_provider=modelinfo_provider,
+        modelinfo_fn=modelinfo_fn,
         request_parser=request_parser,
         method_decorators=[api_key_required],
     )
