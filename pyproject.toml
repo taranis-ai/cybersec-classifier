@@ -7,15 +7,15 @@ maintainers = [{ name = "AIT", email = "lukas.linauer@ait.ac.at" }]
 classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Security",
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.13"
 dependencies = [
     "joblib>=1.5.1",
     "sentence-transformers>=5.1.0",
-    "taranis_base_bot"
+    "taranis-base-bot",
+    "scikit-learn==1.6.1"
 ]
 dynamic = ["version"]
 
@@ -52,4 +52,4 @@ filterwarnings = [
 ]
 
 [tool.uv.sources]
-taranis_base_bot = { path = "../taranis_base_bot" }
+taranis-base-bot = { path = "../taranis-base-bot" , editable=true}
