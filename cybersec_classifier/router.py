@@ -1,5 +1,5 @@
 from taranis_base_bot.blueprint import create_service_blueprint
-from taranis_base_bot.modelinfo import get_modelinfo
+from taranis_base_bot.modelinfo import get_hf_modelinfo
 from taranis_base_bot.decorators import api_key_required
 from cybersec_classifier.config import get_model
 
@@ -16,7 +16,7 @@ def init(app):
     model = get_model()
 
     model_name = getattr(model, "model_name", None)
-    modelinfo_fn = (lambda: get_modelinfo(model_name)) if isinstance(model_name, str) else (lambda: {"model": "unknown"})
+    modelinfo_fn = (lambda: get_hf_modelinfo(model_name)) if isinstance(model_name, str) else (lambda: {"model": "unknown"})
 
     bp = create_service_blueprint(
         name="bot",
