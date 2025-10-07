@@ -1,18 +1,25 @@
 from functools import lru_cache
 from typing import Literal
 from taranis_base_bot.protocols import Predictor
-from taranis_base_bot.config import get_settings as get_common_settings
-from cybersec_classifier.cybersec_mlp import MLPClassifier
-from cybersec_classifier.bart_mnli import BartMNLIClassifier
+from taranis_base_bot.config import CommonSettings
 
-Config = get_common_settings()
-MODEL: Literal["mlp", "bart_mnli"] = "mlp"
+
+class Settings(CommonSettings):
+    MODEL: Literal["mlp", "bart_mnli"] = "mlp"
+
+
+Config = Settings()
 
 
 @lru_cache(maxsize=1)
 def get_model() -> Predictor:
-    if MODEL == "mlp":
+    if Config.MODEL == "mlp":
+        from cybersec_classifier.cybersec_mlp import MLPClassifier
+
         return MLPClassifier()
-    if MODEL == "bart_mnli":
+    elif Config.MODEL == "bart_mnli":
+        from cybersec_classifier.bart_mnli import BartMNLIClassifier
+
         return BartMNLIClassifier()
-    raise ValueError(f"Unknown model {MODEL!r}")
+    else:
+        raise ValueError(f"Unknown model {Config.MODEL!r}")
