@@ -6,7 +6,8 @@ import joblib
 class MLPClassifier:
     """
     Classifier based on embed + MLP
-    URL: https://huggingface.co/selfconstruct3d/cybersec_classifier
+    Classifier URL: https://huggingface.co/selfconstruct3d/cybersec_classifier
+    Embedding Model URL: https://huggingface.co/intfloat/multilingual-e5-large
     """
 
     model_name = "selfconstruct3d/cybersec_classifier"
