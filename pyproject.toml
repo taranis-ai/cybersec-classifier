@@ -50,6 +50,3 @@ filterwarnings = [
     "ignore::DeprecationWarning",
     "ignore::UserWarning"
 ]
-
-[tool.uv.sources]
-taranis-base-bot = { path = "../taranis-base-bot" , editable=true}
