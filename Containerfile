@@ -1,4 +1,4 @@
-FROM python:3.12-slim AS builder
+FROM python:3.13-slim AS builder
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 WORKDIR /app/
@@ -16,9 +16,9 @@ RUN uv venv && \
     uv sync --frozen && \
     python -m compileall /app/
 
-FROM python:3.12-slim
+FROM python:3.13-slim
 
-ARG MODEL="bart_mnli"
+ARG MODEL="cybersec_mlp"
 
 WORKDIR /app/
 
@@ -37,10 +37,11 @@ ENV GRANIAN_WORKERS=2
 ENV GRANIAN_BLOCKING_THREADS=4
 ENV GRANIAN_INTERFACE=wsgi
 ENV GRANIAN_HOST=0.0.0.0
+ENV GRANIAN_LOG_ACCESS_ENABLED=1
 ENV MODEL=${MODEL}
 
 # bake models in to the image
-RUN python -c 'from cybersec_classifier.predictor_factory import PredictorFactory; PredictorFactory()'
+RUN python -c 'from cybersec_classifier.config import Config; from taranis_base_bot.misc import get_model; get_model(Config)'
 
 EXPOSE 8000
 
