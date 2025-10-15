@@ -3,9 +3,9 @@ from huggingface_hub import hf_hub_download
 import joblib
 
 
-class MLPClassifier:
+class CybersecMlp:
     """
-    Classifier based on embed + MLP
+    Classifier based on embed + cybersec_mlp
     Classifier URL: https://huggingface.co/selfconstruct3d/cybersec_classifier
     Embedding Model URL: https://huggingface.co/intfloat/multilingual-e5-large
     """

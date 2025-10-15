@@ -1,7 +1,7 @@
 from transformers import pipeline
 
 
-class BartMNLIClassifier:
+class BartMnli:
     """
     Zero-shot classifier using BART-MNLI
     Model URL: https://huggingface.co/facebook/bart-large-mnli
