@@ -791,7 +791,7 @@ wheels = [
 
 [[package]]
 name = "taranis-base-bot"
-version = "0.1.0"
+version = "0.1.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "flask" },
@@ -801,9 +801,9 @@ dependencies = [
     { name = "requests" },
     { name = "requests-mock" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/af/e8/05826dab8d84d780adb93dfdd7ecd2b1c02566ac8cceb25876f7837ec4ef/taranis_base_bot-0.1.0.tar.gz", hash = "sha256:51c272ea61ed3bfee7ebd518c09f5e530c187b3eecca7875b9e42b614401fdce", size = 44179, upload-time = "2025-10-14T07:22:14.113Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/4e/83/6648dcd1685e48b517a765d1a80bdfb0f89f71c82f8e0daf263ccbc76163/taranis_base_bot-0.1.1.tar.gz", hash = "sha256:64fda158033483b5d0c6bd00e9bc0e0050e8e1fe10ce3a11add697f00e18bfc5", size = 44949, upload-time = "2025-10-15T08:34:21.865Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/6c/18/5e56721099c581398aaaffe48cd9443fcf75776f2c80e57a43bcb7442f64/taranis_base_bot-0.1.0-py3-none-any.whl", hash = "sha256:c6546ca008fd3bdc278135d9b3daaa0d8d202b805ca1086bfe9e81a593cea45d", size = 11829, upload-time = "2025-10-14T07:22:12.989Z" },
+    { url = "https://files.pythonhosted.org/packages/5b/26/a5c5cd6ee50fa29e459070a4b850f25693310e6450ce5290c9802cb12f76/taranis_base_bot-0.1.1-py3-none-any.whl", hash = "sha256:303ff559f0629530a4799a58d229db33f2adca712958e7921abdf8234c469922", size = 12492, upload-time = "2025-10-15T08:34:20.304Z" },
 ]
 
 [[package]]
