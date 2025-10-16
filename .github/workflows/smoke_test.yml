@@ -9,6 +9,6 @@ on:
 jobs:
   test_docker_deployment:
     if: ${{ github.event.review.state == 'approved' || github.event_name == 'workflow_dispatch' }}
-    uses: taranis-ai/github-actions/.github/workflows/smoke-test.yml@master
+    uses: taranis-ai/github-actions/.github/workflows/smoke-test.yml@set_working_dir
     with:
       repo_name: ${{ github.event.repository.name }}
