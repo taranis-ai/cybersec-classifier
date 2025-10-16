@@ -22,6 +22,7 @@ jobs:
 
   build_container:
     name: Build and Push Containers
+    needs: test
     strategy:
       fail-fast: false
       matrix:
