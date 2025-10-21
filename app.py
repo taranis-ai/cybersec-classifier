@@ -1,4 +1,4 @@
 from cybersec_classifier.config import Config
-from taranis_base_bot import create_default_bot_app
+from taranis_base_bot import create_app
 
-app = create_default_bot_app(Config.PACKAGE_NAME, Config)
+app = create_app(Config.PACKAGE_NAME, Config)
