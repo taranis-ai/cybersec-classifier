@@ -1,6 +1,6 @@
 # Taranis AI cybersec-classifier Bot
 
-Add more verbose description of your Bot here
+A Bot that can classify texts into Cybersecurity/Not-Cybersecurity
 
 
 ## Pre-requisites
