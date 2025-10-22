@@ -1,0 +1,23 @@
+{
+  "template": "https://github.com/taranis-ai/bot_template",
+  "commit": "f756fb10e7b47689a68e69224f2a9d73b0642b9b",
+  "checkout": "v0.8.0",
+  "context": {
+    "cookiecutter": {
+      "project_name": "cybersec-classifier",
+      "models": "cybersec_mpl,bart_mnli",
+      "__dir_name": "cybersec-classifier",
+      "__package_name": "cybersec_classifier",
+      "__module_name": "cybersec_classifier",
+      "__class_name": "Cybersec-classifier",
+      "__image_name": "taranis-cybersec-classifier",
+      "author_mail": "lukas.linauer@ait.ac.at",
+      "description": "A Bot classifying News Items into Cybersecurity/Non-Cybersecurity",
+      "repo_url": "https://github.com/taranis-ai/cybersec-classifier",
+      "init_git_repo": true,
+      "_template": "https://github.com/taranis-ai/bot_template",
+      "_commit": "f756fb10e7b47689a68e69224f2a9d73b0642b9b"
+    }
+  },
+  "directory": null
+}
