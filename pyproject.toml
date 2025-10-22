@@ -42,7 +42,7 @@ packages = ["cybersec_classifier"]
 
 [tool.ruff]
 line-length = 142
-target-version = "py312"
+target-version = "py313"
 
 [tool.pytest.ini_options]
 filterwarnings = [
