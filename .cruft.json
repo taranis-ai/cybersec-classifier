@@ -2,10 +2,14 @@
   "template": "https://github.com/taranis-ai/bot_template",
   "commit": "f756fb10e7b47689a68e69224f2a9d73b0642b9b",
   "checkout": "v0.8.0",
+  "skip": [
+    "cybersec_classifier/*",
+    "tests/*"
+  ],
   "context": {
     "cookiecutter": {
       "project_name": "cybersec-classifier",
-      "models": "cybersec_mpl,bart_mnli",
+      "models": "cybersec_mlp,bart_mnli",
       "__dir_name": "cybersec-classifier",
       "__package_name": "cybersec_classifier",
       "__module_name": "cybersec_classifier",
