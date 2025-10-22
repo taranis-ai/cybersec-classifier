@@ -1,54 +1,24 @@
 #!/bin/bash
 
-if [ ! -e "uv.lock" ]
-then
-    echo "uv.lock does not exist. Please run 'uv sync' or 'uv lock' to create it"
-    echo "Error: Cannot build container without uv.lock -> Abort"
-    exit
-fi
-
 set -eou pipefail
 
-build_tags=""
-build_args=""
+if [ ! -d .git ]; then
+    echo "This script must be run from the root of a git repository"
+    exit 1
+fi
 
-MODEL=${MODEL:-"mlp"}
+cd $(git rev-parse --show-toplevel)
 
-# if not a git repo, build locally
-if [ -d .git ]; then
-    cd $(git rev-parse --show-toplevel)
+GITHUB_REPOSITORY_OWNER=${GITHUB_REPOSITORY_OWNER:-"ghcr.io/taranis-ai"}
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD | sed 's/[^a-zA-Z0-9_.-]/_/g')
 
-    repo_name=$(grep 'url =' .git/config | sed -E 's/.*[:\/]([^\/]+)\.git/\1/')
-    # if remote url for repo not given -> abort
-    if [ -z "$repo_name" ]; then
-        echo "Error: Could not get remote repository name. Please check your .git/config"
-        exit 1
-    fi
+MODEL=${MODEL:-"cybersec_mlp"}
 
-    GITHUB_REPOSITORY_OWNER=${GITHUB_REPOSITORY_OWNER:-"ghcr.io/taranis-ai"}
-    build_args+="--build-arg GITHUB_REPOSITORY_OWNER='${GITHUB_REPOSITORY_OWNER}'"
-    build_tags+="--tag ${GITHUB_REPOSITORY_OWNER}/${REPO_NAME}>:latest "
-    build_tags+="--tag '${GITHUB_REPOSITORY_OWNER}/${REPO_NAME}:${MODEL}'"
-
-    # check if there are any commits yet
-    if git rev-parse --quiet --verify HEAD >/dev/null; then
-        CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD | sed 's/[^a-zA-Z0-9_.-]/_/g')
-        echo "Building image for branch ${CURRENT_BRANCH} and model ${MODEL} on ${GITHUB_REPOSITORY_OWNER}"
-        build_tags+="--tag ${GITHUB_REPOSITORY_OWNER}/${REPO_NAME}:${CURRENT_BRANCH} "
-    else
-        echo "The repository has no commits yet."
-    fi
-
-else
-    build_tags+="--tag cybersec_classifier:${MODEL} "
-    build_tags+="--tag cybersec_classifier:latest"
-    echo "Current directory is not a git repo. Building image for model ${MODEL} locally"
-
-fi;
-
-build_args+="--build-arg MODEL='${MODEL}'"
+echo "Building containers for branch ${CURRENT_BRANCH} with model ${MODEL} on ${GITHUB_REPOSITORY_OWNER}"
 
 docker buildx build --file Containerfile \
-  $build_args \
-  $build_tags \
+  --build-arg GITHUB_REPOSITORY_OWNER="${GITHUB_REPOSITORY_OWNER}" \
+  --build-arg MODEL="${MODEL}" \
+  --tag "${GITHUB_REPOSITORY_OWNER}/cybersec-classifier:latest" \
+  --tag "${GITHUB_REPOSITORY_OWNER}/cybersec-classifier:${MODEL}" \
   --load .
