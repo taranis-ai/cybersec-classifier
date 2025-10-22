@@ -1,0 +1,12 @@
+name: Test
+on:
+  pull_request:
+  types: [opened, synchronize]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Run Python Tests
+    uses: taranis-ai/github-actions/.github/workflows/python-uv.yml@master
