@@ -6,7 +6,7 @@ class Settings(CommonSettings):
     MODEL: Literal["cybersec_mlp", "bart_mnli"] = "cybersec_mlp"
     PACKAGE_NAME: str = "cybersec_classifier"
     HF_MODEL_INFO: bool = True
-    PAYLOAD_KEY: str = "text"
+    PAYLOAD_SCHEMA: dict[str, dict] = {"text": {"type": "str", "required": True}}
 
 
 Config = Settings()
