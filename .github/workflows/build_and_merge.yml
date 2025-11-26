@@ -1,13 +1,11 @@
-name: Test and Build Containers
+name: Build and merge images
 
 on:
+  workflow_dispatch:
   push:
     branches:
+      - main
       - master
-    tags:
-      - "**"
-  workflow_dispatch:
-  pull_request:
 
 permissions:
   packages: write
@@ -16,18 +14,13 @@ permissions:
   attestations: write
 
 jobs:
-  test:
-    name: Run Python Tests
-    uses: taranis-ai/github-actions/.github/workflows/python-uv.yml@master
-
   build_container:
     name: Build and Push Containers
     strategy:
       fail-fast: false
       matrix:
-        model: [bart_mnli, mlp]
-
-        os: [ubuntu-latest, ubuntu-24.04-arm]
+        model: [bart_mnli, cybersec_mlp]
+        os: [blacksmith-2vcpu-ubuntu-2404, blacksmith-2vcpu-ubuntu-2404-arm]
     uses: taranis-ai/github-actions/.github/workflows/build-multiarch-bot-container.yml@master
     with:
       ghcr_image: ghcr.io/taranis-ai/taranis-cybersec-classifier
@@ -40,11 +33,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        model: [bart_mnli, mlp]
-
+        model: [bart_mnli, cybersec_mlp]
     uses: taranis-ai/github-actions/.github/workflows/merge-multiarch-bot-container.yml@master
     with:
       ghcr_image: ghcr.io/taranis-ai/taranis-cybersec-classifier
       model: ${{ matrix.model }}
-      latest: ${{ matrix.model == 'mlp' }}
+      latest: ${{ matrix.model == 'cybersec_mlp' }}
 

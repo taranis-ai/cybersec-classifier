@@ -1,8 +1,8 @@
-from cybersec_classifier.bart_mnli import BartMNLIClassifier
-from cybersec_classifier.cybersec_mlp import MLPClassifier
+from cybersec_classifier.bart_mnli import BartMnli
+from cybersec_classifier.cybersec_mlp import CybersecMlp
 
 
-def test_cybersec_classification_bart_mnli(bart_mnli: BartMNLIClassifier):
+def test_cybersec_classification_bart_mnli(bart_mnli: BartMnli):
     result = bart_mnli.predict("This is a general text about flowers.")
     assert isinstance(result, dict)
     assert set(result.keys()) == {"cybersecurity", "non-cybersecurity"}
@@ -12,11 +12,11 @@ def test_cybersec_classification_bart_mnli(bart_mnli: BartMNLIClassifier):
     assert result["cybersecurity"] > result["non-cybersecurity"]
 
 
-def test_cybersec_classification_mlp(mlp: MLPClassifier):
-    result = mlp.predict("This is a general text about flowers.")
+def test_cybersec_classification_cybersec_mlp(cybersec_mlp: CybersecMlp):
+    result = cybersec_mlp.predict("This is a general text about flowers.")
     assert isinstance(result, dict)
     assert set(result.keys()) == {"cybersecurity", "non-cybersecurity"}
     assert result["cybersecurity"] < result["non-cybersecurity"]
 
-    result = mlp.predict("The newest development in malware automation are concerning")
+    result = cybersec_mlp.predict("The newest development in malware automation are concerning")
     assert result["cybersecurity"] > result["non-cybersecurity"]

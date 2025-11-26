@@ -1,7 +1,6 @@
 # Taranis AI cybersec-classifier Bot
 
-Add more verbose description of your Bot here
-
+A Bot that can classify texts into Cybersecurity/Not-Cybersecurity
 
 ## Pre-requisites
 
@@ -21,9 +20,9 @@ uv sync --all-extras --dev
 You can run your bot locally with
 
 ```bash
-flask run
+flask run --port 5500
 # or
-granian run
+granian app --port 5500
 ```
 
 
@@ -34,13 +33,13 @@ You can also create a Docker image out of this bot. For this, you first need to 
 You can specify which model the image should be built with the MODEL environment variable. If you omit it, the image will be built with the default model.
 
 ```bash
-MODEL=model_name ./build_container.sh
+MODEL=<model_name> ./build_container.sh
 ```
 
 then you can run it with:
 
 ```bash
-docker run -p 5500:8000 <image-name>:<tag>
+docker run -p 5500:8000 <image_name>:<tag>
 ```
 
 If you encounter errors, make sure that port 5500 is not in use by another application.
@@ -51,8 +50,16 @@ If you encounter errors, make sure that port 5500 is not in use by another appli
 Once the bot is running, you can send test data to it on which it runs its inference method:
 
 ```bash
-curl -X POST http://127.0.0.1:5500 -H "Content-Type: application/json" -d '{"key": "some data"}'
+curl -X POST http://127.0.0.1:5500 -H "Content-Type: application/json" -d '{"text": "A text about cybersecurity"}'
 ```
+
+## Development
+
+If you want to contribute to the development of this bot, make sure you set up your pre-commit hooks correctly:
+
+- Install pre-commit (https://pre-commit.com/)
+- Setup hooks: `> pre-commit install`
+
 
 ## License
 

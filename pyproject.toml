@@ -7,21 +7,15 @@ maintainers = [{ name = "AIT", email = "lukas.linauer@ait.ac.at" }]
 classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Security",
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.13,<3.14"
 dependencies = [
-    "requests",
-    "Flask",
-    "pydantic-settings",
-    "python-dotenv",
-    "granian",
-    "transformers",
-    "torch",
     "joblib>=1.5.1",
     "sentence-transformers>=5.1.0",
+    "taranis-base-bot",
+    "scikit-learn==1.6.1"
 ]
 dynamic = ["version"]
 
@@ -41,14 +35,14 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
 fallback_version = "0.0.0"
-tag_regex = "^refs/pull/(\\d+)/merge$"
+tag_regex = "^(?:refs/pull/\\d+/merge$|v(?P<version>\\d+\\.\\d+\\.\\d+))$"
 
 [tool.setuptools]
 packages = ["cybersec_classifier"]
 
 [tool.ruff]
 line-length = 142
-target-version = "py312"
+target-version = "py313"
 
 [tool.pytest.ini_options]
 filterwarnings = [
