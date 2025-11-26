@@ -56,7 +56,8 @@ jobs:
             docker pull ghcr.io/taranis-ai/taranis-${{ github.event.repository.name }}:latest
             docker buildx imagetools create \
               --tag ghcr.io/taranis-ai/taranis-${{ github.event.repository.name }}:${TAG} \
-              --tag ghcr.io/taranis-ai/taranis-${{ github.event.repository.name }}:stable
+              --tag ghcr.io/taranis-ai/taranis-${{ github.event.repository.name }}:stable \
+              ghcr.io/taranis-ai/taranis-${{ github.event.repository.name }}:latest
 
       - name: Release
         uses: softprops/action-gh-release@v2.0.6
