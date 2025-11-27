@@ -68,7 +68,7 @@ Once the bot is running, you can send test data to it on which it runs its infer
 You can also set up authorization via the `API_KEY` env var. In this case, you need to send the API_KEY as an Authorization header:
 
 ```bash
-> curl -X POST http://127.0.0.1:5000/  -H "Authorization: Bearer api_key" -H "Content-Type: application/json" -d '{"text": "In West Philadelphia born and raised"}'
+> curl -X POST http://127.0.0.1:5500/  -H "Authorization: Bearer api_key" -H "Content-Type: application/json" -d '{"text": "In West Philadelphia born and raised"}'
 > {"cybersecurity":8.931287447921932e-05,"non-cybersecurity":0.9999107122421265}
 ```
 
