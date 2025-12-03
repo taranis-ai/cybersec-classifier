@@ -34,7 +34,7 @@ available configs are in the `config.py`
 You can select the model via the `MODEL` env var. E.g.:
 
 ```bash
-MODEL=bart_mnli flask run
+MODEL=cybersec_mlp flask run
 ```
 
 ## Docker
