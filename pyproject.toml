@@ -44,6 +44,9 @@ packages = ["cybersec_classifier"]
 line-length = 142
 target-version = "py313"
 
+[tool.ruff.lint]
+ignore = ["E402"]
+
 [tool.pytest.ini_options]
 filterwarnings = [
     "ignore:.*_app_ctx_stack.*:DeprecationWarning",
