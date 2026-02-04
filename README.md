@@ -61,15 +61,19 @@ If you encounter errors, make sure that port 5500 is not in use by another appli
 Once the bot is running, you can send test data to it on which it runs its inference method:
 
 ```bash
-> curl -X POST http://127.0.0.1:5500 -H "Content-Type: application/json" -d '{"text": "A text about cybersecurity"}'
-> {"cybersecurity":0.9999910593032837,"non-cybersecurity":8.940696716308594e-06}
+curl -X POST http://127.0.0.1:5500 -H "Content-Type: application/json" -d '{"text": "A text about cybersecurity"}'
+```
+```bash
+{"cybersecurity":0.9999910593032837,"non-cybersecurity":8.940696716308594e-06}
 ```
 
 You can also set up authorization via the `API_KEY` env var. In this case, you need to send the API_KEY as an Authorization header:
 
 ```bash
-> curl -X POST http://127.0.0.1:5500/  -H "Authorization: Bearer api_key" -H "Content-Type: application/json" -d '{"text": "In West Philadelphia born and raised"}'
-> {"cybersecurity":8.931287447921932e-05,"non-cybersecurity":0.9999107122421265}
+curl -X POST http://127.0.0.1:5500/  -H "Authorization: Bearer api_key" -H "Content-Type: application/json" -d '{"text": "In West Philadelphia born and raised"}'
+```
+```bash
+"cybersecurity":8.931287447921932e-05,"non-cybersecurity":0.9999107122421265}
 ```
 
 
