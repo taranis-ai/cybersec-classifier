@@ -1,3 +1,4 @@
+import asyncio
 from sentence_transformers import SentenceTransformer
 from huggingface_hub import hf_hub_download
 import joblib
@@ -18,9 +19,9 @@ class CybersecMlp:
         self.model = joblib.load(model_path)
         self.embedder = SentenceTransformer("intfloat/multilingual-e5-large")
 
-    def predict(self, text: str, **_: object) -> dict[str, float]:
-        embedding = self.embedder.encode([text], convert_to_numpy=True, show_progress_bar=False)
-        if scores := self.model.predict_proba(embedding).tolist()[0]:
+    async def predict(self, text: str, **_: object) -> dict[str, float]:
+        embedding = await asyncio.to_thread(self.embedder.encode, [text], convert_to_numpy=True, show_progress_bar=False)
+        if scores := (await asyncio.to_thread(self.model.predict_proba, embedding)).tolist()[0]:
             return dict(zip(self.candidate_labels, scores))
         else:
             raise ValueError(f"Failed to classify text: {text}")
