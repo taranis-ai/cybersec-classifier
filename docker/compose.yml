@@ -3,8 +3,17 @@ services:
     image: ghcr.io/taranis-ai/taranis-cybersec-classifier:latest
     environment:
       DEBUG: "${DEBUG:-False}"
+<<<<<<< before updating
       MODEL: "${MODEL:-cybersec_mlp}"          
       API_KEY: "${API_KEY:-testkey}"            
     ports:
       - "${BOT_PORT:-5500}:8000"  
     restart: unless-stopped
+=======
+      MODEL: "${MODEL:-<default_model>}"
+      API_KEY: "${API_KEY:-testkey}"
+      # add additional env vars
+    ports:
+      - "${BOT_PORT:-5500}:8000"
+    restart: unless-stopped
+>>>>>>> after updating
